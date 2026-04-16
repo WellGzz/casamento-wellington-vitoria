@@ -27,9 +27,144 @@
                 <li><a href="#local" class="nav-link">Local</a></li>
                 <li><a href="#galeria" class="nav-link">Galeria</a></li>
                 <li><a href="#rsvp" class="nav-link">RSVP</a></li>
+                <li><button class="btn-admin-toggle" id="btnAdminToggle"><i class="fas fa-lock"></i> Admin</button></li>
             </ul>
         </div>
     </nav>
+
+    <!-- Login Admin Modal -->
+    <div id="adminLoginModal" class="modal-admin">
+        <div class="modal-admin-content">
+            <div class="modal-admin-header">
+                <h2>Acesso Admin</h2>
+                <button class="close-admin-modal" id="closeAdminModal">&times;</button>
+            </div>
+            <div class="modal-admin-body">
+                <p class="info-text">Apenas Wellington & Vitoria podem acessar as confirmações</p>
+                <form id="adminLoginForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="adminPassword">Senha de Admin</label>
+                        <input type="password" id="adminPassword" name="adminPassword" placeholder="Digite a senha" required>
+                    </div>
+                    <button type="submit" class="btn-admin-login">Entrar</button>
+                    <div id="adminLoginMessage" class="admin-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel Admin -->
+    <div id="adminPanel" class="admin-panel">
+        <div class="admin-panel-header">
+            <h2>Painel de Admin</h2>
+            <button class="btn-logout" id="btnLogout">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+        <div class="admin-panel-content">
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="confirmacoes">
+                    <i class="fas fa-list"></i> Confirmações
+                </button>
+                <button class="admin-tab-btn" data-tab="estatisticas">
+                    <i class="fas fa-chart-bar"></i> Estatísticas
+                </button>
+                <button class="admin-tab-btn" data-tab="exportar">
+                    <i class="fas fa-download"></i> Exportar
+                </button>
+            </div>
+
+            <!-- Tab: Confirmações -->
+            <div id="confirmacoes" class="admin-tab-content active">
+                <div class="admin-search">
+                    <input type="text" id="searchInput" placeholder="Buscar por nome ou email...">
+                    <select id="filterRestrictions">
+                        <option value="">Todas as restrições</option>
+                        <option value="vegetariano">Vegetariano</option>
+                        <option value="vegano">Vegano</option>
+                        <option value="sem-gluten">Sem Glúten</option>
+                        <option value="sem-lactose">Sem Lactose</option>
+                        <option value="alergia">Com Alergias</option>
+                    </select>
+                </div>
+                <div id="adminRsvpList" class="admin-rsvp-list">
+                    <!-- Lista de RSVPs será preenchida aqui -->
+                </div>
+            </div>
+
+            <!-- Tab: Estatísticas -->
+            <div id="estatisticas" class="admin-tab-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Confirmados</span>
+                            <span class="stat-value" id="adminTotalConfirmados">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total de Pessoas</span>
+                            <span class="stat-value" id="adminTotalPessoas">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Com Restrições</span>
+                            <span class="stat-value" id="adminComRestrictions">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-label">Confirmação</span>
+                            <span class="stat-value" id="adminPercentual">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-item">
+                        <h3>Acompanhantes por Pessoa</h3>
+                        <div id="acompanhantesChart" class="chart"></div>
+                    </div>
+                    <div class="chart-item">
+                        <h3>Restrições Alimentares</h3>
+                        <div id="restricoesChart" class="chart"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Exportar -->
+            <div id="exportar" class="admin-tab-content">
+                <div class="export-options">
+                    <h3>Exportar Dados</h3>
+                    <button id="btnExportCSV" class="btn-export">
+                        <i class="fas fa-file-csv"></i> Exportar para CSV
+                    </button>
+                    <button id="btnExportJSON" class="btn-export">
+                        <i class="fas fa-file-code"></i> Exportar para JSON
+                    </button>
+                    <button id="btnPrint" class="btn-export">
+                        <i class="fas fa-print"></i> Imprimir
+                    </button>
+                    <button id="btnLimparDados" class="btn-export btn-danger">
+                        <i class="fas fa-trash"></i> Limpar Todos os Dados
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Seção Home -->
     <section id="home" class="hero">
@@ -220,11 +355,6 @@
     <section id="rsvp" class="rsvp">
         <div class="container">
             <h2 class="section-title">Confirme sua Presença</h2>
-            
-            <!-- Botão para ver RSVPs (apenas para você) -->
-            <button class="btn-ver-rsvps" id="btnVerRsvps">
-                <i class="fas fa-list"></i> Ver Confirmações
-            </button>
 
             <form class="rsvp-form" id="rsvpForm">
                 <div class="form-group">
@@ -262,31 +392,6 @@
             <div id="formMessage" class="form-message"></div>
         </div>
     </section>
-
-    <!-- Modal para ver RSVPs -->
-    <div id="rsvpModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Confirmações de Presença</h2>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="rsvp-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalConfirmados">0</span>
-                        <span class="stat-label">Confirmados</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="totalPessoas">0</span>
-                        <span class="stat-label">Pessoas</span>
-                    </div>
-                </div>
-                <div id="rsvpList" class="rsvp-list">
-                    <!-- Lista de RSVPs será preenchida aqui -->
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Rodapé -->
     <footer class="footer">
