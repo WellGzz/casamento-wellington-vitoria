@@ -6,6 +6,9 @@
     <title>Wellington & Vitoria - Casamento</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 </head>
 <body>
     <!-- Navegação -->
@@ -21,6 +24,7 @@
                 <li><a href="#home" class="nav-link">Início</a></li>
                 <li><a href="#historia" class="nav-link">Nossa História</a></li>
                 <li><a href="#detalhes" class="nav-link">Detalhes</a></li>
+                <li><a href="#local" class="nav-link">Local</a></li>
                 <li><a href="#galeria" class="nav-link">Galeria</a></li>
                 <li><a href="#rsvp" class="nav-link">RSVP</a></li>
             </ul>
@@ -127,6 +131,46 @@
         </div>
     </section>
 
+    <!-- Seção Local com Mapa -->
+    <section id="local" class="local">
+        <div class="container">
+            <h2 class="section-title">Local do Casamento</h2>
+            <div class="local-content">
+                <div class="local-info">
+                    <h3>Rancho Socorro</h3>
+                    <p class="endereco">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Socorro, SP - Brasil
+                    </p>
+                    <div class="local-detalhes">
+                        <div class="detalhe-item">
+                            <i class="fas fa-road"></i>
+                            <div>
+                                <strong>Endereço</strong>
+                                <p>Rodovia Socorro - SP (a confirmar)</p>
+                            </div>
+                        </div>
+                        <div class="detalhe-item">
+                            <i class="fas fa-car"></i>
+                            <div>
+                                <strong>Estacionamento</strong>
+                                <p>Gratuito no local</p>
+                            </div>
+                        </div>
+                        <div class="detalhe-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Contato</strong>
+                                <p>(XX) XXXX-XXXX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="map" class="mapa-container"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- Seção Galeria -->
     <section id="galeria" class="galeria">
         <div class="container">
@@ -176,6 +220,12 @@
     <section id="rsvp" class="rsvp">
         <div class="container">
             <h2 class="section-title">Confirme sua Presença</h2>
+            
+            <!-- Botão para ver RSVPs (apenas para você) -->
+            <button class="btn-ver-rsvps" id="btnVerRsvps">
+                <i class="fas fa-list"></i> Ver Confirmações
+            </button>
+
             <form class="rsvp-form" id="rsvpForm">
                 <div class="form-group">
                     <label for="nome">Nome Completo *</label>
@@ -212,6 +262,31 @@
             <div id="formMessage" class="form-message"></div>
         </div>
     </section>
+
+    <!-- Modal para ver RSVPs -->
+    <div id="rsvpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Confirmações de Presença</h2>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="rsvp-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalConfirmados">0</span>
+                        <span class="stat-label">Confirmados</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalPessoas">0</span>
+                        <span class="stat-label">Pessoas</span>
+                    </div>
+                </div>
+                <div id="rsvpList" class="rsvp-list">
+                    <!-- Lista de RSVPs será preenchida aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Rodapé -->
     <footer class="footer">
