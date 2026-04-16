@@ -1,896 +1,218 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --primary-dark: #1a1a1a;
-    --primary-pink: #d4556b;
-    --primary-red: #c41e3a;
-    --accent-light: #f5f5f5;
-    --text-dark: #333;
-    --text-light: #666;
-    --transition: all 0.3s ease;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: var(--text-dark);
-    background-color: var(--accent-light);
-}
-
-/* ===== NAVBAR ===== */
-.navbar {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #2d1a2f 100%);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
-}
-
-.logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--primary-pink);
-    letter-spacing: 2px;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-link {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: var(--transition);
-    position: relative;
-}
-
-.nav-link:hover {
-    color: var(--primary-pink);
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary-pink);
-    transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-    width: 100%;
-}
-
-.menu-toggle {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-}
-
-.menu-toggle span {
-    width: 25px;
-    height: 3px;
-    background: white;
-    margin: 5px 0;
-    transition: var(--transition);
-}
-
-/* ===== HERO SECTION ===== */
-.hero {
-    margin-top: 60px;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #2d1a2f 100%);
-    color: white;
-    text-align: center;
-    padding: 100px 2rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 50%, rgba(212, 85, 107, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
-    z-index: 0;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 1;
-    animation: fadeInUp 1s ease;
-}
-
-.names-title {
-    font-size: 4rem;
-    font-weight: 300;
-    letter-spacing: 3px;
-    margin-bottom: 1rem;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.subtitle {
-    font-size: 1.5rem;
-    color: #ddd;
-    margin-bottom: 2rem;
-    font-style: italic;
-}
-
-.heart-animation {
-    font-size: 3rem;
-    color: var(--primary-pink);
-    animation: heartBeat 1.3s infinite;
-    margin: 1rem 0;
-}
-
-.date-hero {
-    font-size: 1.3rem;
-    margin: 1rem 0;
-    color: var(--primary-pink);
-}
-
-.cta-button {
-    display: inline-block;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    color: white;
-    padding: 12px 40px;
-    border-radius: 50px;
-    text-decoration: none;
-    margin-top: 2rem;
-    transition: var(--transition);
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(212, 85, 107, 0.3);
-}
-
-.cta-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(212, 85, 107, 0.4);
-}
-
-/* ===== CONTAINER ===== */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-}
-
-/* ===== SECTION TITLE ===== */
-.section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 3rem;
-    color: var(--primary-dark);
-    position: relative;
-    display: inline-block;
-    width: 100%;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 3px;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    border-radius: 2px;
-}
-
-/* ===== HISTÓRIA SECTION ===== */
-.historia {
-    padding: 80px 0;
-    background: white;
-}
-
-.historia-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.historia-text p {
-    color: var(--text-light);
-    margin-bottom: 1.5rem;
-    line-height: 1.8;
-    font-size: 1.1rem;
-}
-
-.timeline {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.timeline-item {
-    display: flex;
-    gap: 1.5rem;
-    animation: slideInRight 0.6s ease;
-}
-
-.timeline-dot {
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    border-radius: 50%;
-    margin-top: 5px;
-    flex-shrink: 0;
-    box-shadow: 0 0 0 4px rgba(212, 85, 107, 0.2);
-}
-
-.timeline-content h3 {
-    color: var(--primary-dark);
-    margin-bottom: 0.5rem;
-}
-
-.timeline-content p {
-    color: var(--text-light);
-}
-
-/* ===== DETALHES SECTION ===== */
-.detalhes {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-}
-
-.detalhes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
-
-.detalhes-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
-}
-
-.detalhes-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(212, 85, 107, 0.2);
-}
-
-.detalhes-card i {
-    font-size: 3rem;
-    color: var(--primary-pink);
-    margin-bottom: 1rem;
-}
-
-.detalhes-card h3 {
-    color: var(--primary-dark);
-    margin-bottom: 0.5rem;
-    font-size: 1.5rem;
-}
-
-.detalhes-card p {
-    color: var(--text-light);
-}
-
-.small-text {
-    font-size: 0.9rem;
-    color: #999;
-}
-
-/* ===== COUNTDOWN ===== */
-.countdown {
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #2d1a2f 100%);
-    padding: 3rem;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
-}
-
-.countdown h3 {
-    font-size: 1.5rem;
-    margin-bottom: 2rem;
-    color: var(--primary-pink);
-}
-
-.countdown-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 1rem;
-}
-
-.countdown-item {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 2px solid var(--primary-pink);
-}
-
-.countdown-number {
-    display: block;
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-pink);
-    margin-bottom: 0.5rem;
-}
-
-.countdown-item p {
-    font-size: 0.9rem;
-    color: #ddd;
-}
-
-/* ===== LOCAL/MAPA SECTION ===== */
-.local {
-    padding: 80px 0;
-    background: white;
-}
-
-.local-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-}
-
-.local-info h3 {
-    font-size: 2rem;
-    color: var(--primary-dark);
-    margin-bottom: 1rem;
-}
-
-.endereco {
-    color: var(--primary-pink);
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.local-detalhes {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.detalhe-item {
-    display: flex;
-    gap: 1.5rem;
-    padding: 1rem;
-    background: linear-gradient(135deg, rgba(212, 85, 107, 0.1) 0%, rgba(196, 30, 58, 0.05) 100%);
-    border-radius: 8px;
-}
-
-.detalhe-item i {
-    font-size: 1.5rem;
-    color: var(--primary-pink);
-    flex-shrink: 0;
-}
-
-.detalhe-item strong {
-    color: var(--primary-dark);
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.detalhe-item p {
-    color: var(--text-light);
-}
-
-.mapa-container {
-    width: 100%;
-    height: 400px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-#map {
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-}
-
-/* ===== GALERIA SECTION ===== */
-.galeria {
-    padding: 80px 0;
-    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-}
-
-.galeria-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-}
-
-.galeria-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    aspect-ratio: 1;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.galeria-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    transition: var(--transition);
-}
-
-.galeria-item:hover .galeria-placeholder {
-    transform: scale(1.1);
-}
-
-.galeria-placeholder i {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-/* ===== RSVP SECTION ===== */
-.rsvp {
-    padding: 80px 0;
-    background: white;
-}
-
-.btn-ver-rsvps {
-    display: block;
-    margin: 0 auto 3rem;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(212, 85, 107, 0.3);
-}
-
-.btn-ver-rsvps:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(212, 85, 107, 0.4);
-}
-
-.rsvp-form {
-    max-width: 600px;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--primary-dark);
-    font-weight: 600;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 2px solid #ddd;
-    border-radius: 5px;
-    font-family: inherit;
-    font-size: 1rem;
-    transition: var(--transition);
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-pink);
-    box-shadow: 0 0 0 3px rgba(212, 85, 107, 0.1);
-}
-
-.form-group textarea {
-    resize: vertical;
-    min-height: 100px;
-}
-
-.submit-button {
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(212, 85, 107, 0.3);
-}
-
-.submit-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(212, 85, 107, 0.4);
-}
-
-.form-message {
-    text-align: center;
-    margin-top: 1rem;
-    padding: 1rem;
-    border-radius: 5px;
-    display: none;
-}
-
-.form-message.success {
-    background: #d4edda;
-    color: #155724;
-    display: block;
-}
-
-.form-message.error {
-    background: #f8d7da;
-    color: #721c24;
-    display: block;
-}
-
-/* ===== MODAL PARA RSVPS ===== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease;
-}
-
-.modal.show {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 0;
-    border-radius: 10px;
-    max-width: 800px;
-    width: 90%;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    animation: slideUp 0.3s ease;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem;
-    border-bottom: 2px solid #eee;
-    background: linear-gradient(135deg, var(--primary-dark) 0%, #2d1a2f 100%);
-    color: white;
-    border-radius: 10px 10px 0 0;
-}
-
-.modal-header h2 {
-    margin: 0;
-}
-
-.close-modal {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    cursor: pointer;
-    color: white;
-    transition: var(--transition);
-}
-
-.close-modal:hover {
-    color: var(--primary-pink);
-}
-
-.modal-body {
-    padding: 2rem;
-    overflow-y: auto;
-    flex: 1;
-}
-
-.rsvp-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.stat-item {
-    background: linear-gradient(135deg, var(--primary-pink), var(--primary-red));
-    color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    text-align: center;
-}
-
-.stat-number {
-    display: block;
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    display: block;
-    font-size: 1rem;
-}
-
-.rsvp-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.rsvp-item {
-    background: #f9f9f9;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border-left: 4px solid var(--primary-pink);
-    transition: var(--transition);
-}
-
-.rsvp-item:hover {
-    background: #f0f0f0;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-.rsvp-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.rsvp-item-name {
-    font-weight: 600;
-    color: var(--primary-dark);
-    font-size: 1.1rem;
-}
-
-.rsvp-item-date {
-    font-size: 0.9rem;
-    color: #999;
-}
-
-.rsvp-item-info {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 1rem;
-    font-size: 0.95rem;
-    color: var(--text-light);
-}
-
-.rsvp-item-info span {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.rsvp-item-info i {
-    color: var(--primary-pink);
-    width: 20px;
-}
-
-/* ===== FOOTER ===== */
-.footer {
-    background: var(--primary-dark);
-    color: white;
-    text-align: center;
-    padding: 2rem;
-}
-
-.social-links {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.social-link {
-    color: var(--primary-pink);
-    font-size: 1.5rem;
-    transition: var(--transition);
-}
-
-.social-link:hover {
-    color: var(--primary-red);
-    transform: translateY(-3px);
-}
-
-/* ===== ANIMAÇÕES ===== */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
+// Menu Mobile Toggle
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('navMenu');
+
+menuToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+});
+
+// Fechar menu ao clicar em um link
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+    });
+});
+
+// ===== INICIALIZAR MAPA =====
+function initMap() {
+    // Coordenadas do Socorro, SP
+    const socorroCoords = [-22.6519, -46.3026];
+    
+    const map = L.map('map').setView(socorroCoords, 13);
+    
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19,
+    }).addTo(map);
+    
+    // Adicionar marcador do local do casamento
+    const marker = L.marker(socorroCoords, {
+        title: 'Local do Casamento'
+    }).addTo(map);
+    
+    marker.bindPopup(`
+        <div style="text-align: center;">
+            <h4 style="color: #d4556b; margin: 0 0 0.5rem 0;">Rancho Socorro</h4>
+            <p style="margin: 0.5rem 0; font-size: 0.9rem;">05 de Dezembro de 2026</p>
+            <p style="margin: 0; font-size: 0.9rem; color: #666;">19:00</p>
+        </div>
+    `).openPopup();
+}
+
+// Inicializar mapa quando a página carregar
+document.addEventListener('DOMContentLoaded', () => {
+    initMap();
+});
+
+// ===== COUNTDOWN TIMER =====
+function updateCountdown() {
+    const weddingDate = new Date('2026-12-05T19:00:00').getTime();
+    
+    const timer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = weddingDate - now;
+        
+        const dias = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById('dias').textContent = dias;
+        document.getElementById('horas').textContent = horas;
+        document.getElementById('minutos').textContent = minutos;
+        document.getElementById('segundos').textContent = segundos;
+        
+        if (distance < 0) {
+            clearInterval(timer);
+            document.querySelector('.countdown').innerHTML = '<h3>🎉 O Grande Dia Chegou! 🎉</h3>';
+        }
+    }, 1000);
+}
+
+updateCountdown();
+
+// ===== GERENCIAR RSVPs NO LOCAL STORAGE =====
+function salvarRSVP(dados) {
+    let rsvps = JSON.parse(localStorage.getItem('rsvps')) || [];
+    dados.id = Date.now();
+    rsvps.push(dados);
+    localStorage.setItem('rsvps', JSON.stringify(rsvps));
+}
+
+function carregarRSVPs() {
+    return JSON.parse(localStorage.getItem('rsvps')) || [];
+}
+
+function exibirRSVPs() {
+    const rsvps = carregarRSVPs();
+    const rsvpList = document.getElementById('rsvpList');
+    const totalConfirmados = document.getElementById('totalConfirmados');
+    const totalPessoas = document.getElementById('totalPessoas');
+    
+    rsvpList.innerHTML = '';
+    
+    if (rsvps.length === 0) {
+        rsvpList.innerHTML = '<p style="text-align: center; color: #999;">Nenhuma confirmação ainda.</p>';
+        totalConfirmados.textContent = '0';
+        totalPessoas.textContent = '0';
+        return;
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    
+    let totalPessoasCount = 0;
+    
+    rsvps.forEach(rsvp => {
+        totalPessoasCount += parseInt(rsvp.acompanhantes);
+        
+        const dataFormatada = new Date(rsvp.timestamp).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        const rsvpItem = document.createElement('div');
+        rsvpItem.className = 'rsvp-item';
+        rsvpItem.innerHTML = `
+            <div class="rsvp-item-header">
+                <span class="rsvp-item-name">
+                    <i class="fas fa-user-check" style="color: #d4556b;"></i> ${rsvp.nome}
+                </span>
+                <span class="rsvp-item-date">${dataFormatada}</span>
+            </div>
+            <div class="rsvp-item-info">
+                <span><i class="fas fa-envelope"></i> ${rsvp.email}</span>
+                <span><i class="fas fa-phone"></i> ${rsvp.telefone || 'N/A'}</span>
+                <span><i class="fas fa-users"></i> ${rsvp.acompanhantes} ${rsvp.acompanhantes == 1 ? 'pessoa' : 'pessoas'}</span>
+                ${rsvp.restricoes ? `<span><i class="fas fa-utensils"></i> ${rsvp.restricoes}</span>` : ''}
+            </div>
+            ${rsvp.mensagem ? `<p style="margin-top: 0.5rem; font-style: italic; color: #666;">💬 "${rsvp.mensagem}"</p>` : ''}
+        `;
+        rsvpList.appendChild(rsvpItem);
+    });
+    
+    totalConfirmados.textContent = rsvps.length;
+    totalPessoas.textContent = totalPessoasCount;
 }
 
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+// ===== RSVP FORM HANDLER =====
+const rsvpForm = document.getElementById('rsvpForm');
+const formMessage = document.getElementById('formMessage');
 
-@keyframes heartBeat {
-    0%, 100% {
-        transform: scale(1);
-    }
-    25% {
-        transform: scale(1.3);
-    }
-    50% {
-        transform: scale(1);
-    }
-}
+rsvpForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        telefone: document.getElementById('telefone').value,
+        acompanhantes: document.getElementById('acompanhantes').value,
+        restricoes: document.getElementById('restricoes').value,
+        mensagem: document.getElementById('mensagem').value,
+        timestamp: new Date().toISOString()
+    };
+    
+    // Salvar no localStorage
+    salvarRSVP(formData);
+    
+    console.log('Dados do RSVP salvos:', formData);
+    
+    // Mostrar mensagem de sucesso
+    formMessage.textContent = '✅ Presença confirmada com sucesso! Obrigado!';
+    formMessage.classList.add('success');
+    formMessage.classList.remove('error');
+    
+    // Limpar formulário
+    rsvpForm.reset();
+    
+    // Esconder mensagem após 5 segundos
+    setTimeout(() => {
+        formMessage.textContent = '';
+        formMessage.classList.remove('success');
+    }, 5000);
+});
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+// ===== MODAL DE RSVPs =====
+const btnVerRsvps = document.getElementById('btnVerRsvps');
+const rsvpModal = document.getElementById('rsvpModal');
+const closeModal = document.getElementById('closeModal');
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+btnVerRsvps.addEventListener('click', () => {
+    exibirRSVPs();
+    rsvpModal.classList.add('show');
+});
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .names-title {
-        font-size: 2.5rem;
-    }
+closeModal.addEventListener('click', () => {
+    rsvpModal.classList.remove('show');
+});
 
-    .subtitle {
-        font-size: 1.2rem;
+rsvpModal.addEventListener('click', (e) => {
+    if (e.target === rsvpModal) {
+        rsvpModal.classList.remove('show');
     }
+});
 
-    .nav-menu {
-        display: none;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        flex-direction: column;
-        background: var(--primary-dark);
-        width: 100%;
-        text-align: center;
-        padding: 2rem 0;
-        gap: 1rem;
-    }
+// ===== SMOOTH SCROLL =====
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
 
-    .nav-menu.active {
-        display: flex;
+// ===== EFEITO NAVBAR AO SCROLL =====
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
+    } else {
+        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
-
-    .menu-toggle {
-        display: flex;
-    }
-
-    .historia-content {
-        grid-template-columns: 1fr;
-    }
-
-    .local-content {
-        grid-template-columns: 1fr;
-    }
-
-    .mapa-container {
-        height: 300px;
-    }
-
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .detalhes-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .rsvp-form {
-        padding: 1.5rem;
-    }
-
-    .hero {
-        padding: 60px 1rem;
-    }
-
-    .rsvp-stats {
-        grid-template-columns: 1fr;
-    }
-
-    .modal-content {
-        width: 95%;
-        max-height: 90vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .names-title {
-        font-size: 2rem;
-    }
-
-    .nav-container {
-        padding: 1rem;
-    }
-
-    .logo {
-        font-size: 1.5rem;
-    }
-
-    .countdown-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .galeria-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .rsvp-item-info {
-        grid-template-columns: 1fr;
-    }
-}
+});
