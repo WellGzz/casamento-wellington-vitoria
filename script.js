@@ -2,7 +2,7 @@
 const ADMIN_PASSWORD = 'wellington2026';
 
 // ===== URL DO GOOGLE SHEETS =====
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx6NP91jJYXrGTiGVoXM3QMQcM6IMccsWOlc16QF_sIiiXOy0y4Fdx4iiOQnlRTBlAp/exec';
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxhAp4QfoDuFAWBiF0DklTzU4qTCdM70RWJAQQLKQVoLCj34U43JEqIR5-qWd2wSRZN/exec';
 
 // ===== MENU MOBILE TOGGLE =====
 const menuToggle = document.getElementById('menuToggle');
