@@ -83,28 +83,25 @@ function salvarRSVP(dados) {
     rsvps.push(dados);
     localStorage.setItem('rsvps', JSON.stringify(rsvps));
     
-    // Enviar para Google Sheets
+    // Enviar para Google Sheets (CORRIGIDO SEM CORS)
     if (GOOGLE_SHEETS_URL) {
         fetch(GOOGLE_SHEETS_URL, {
-    method: 'POST',
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        nome: dados.nome,
-        email: dados.email,
-        telefone: dados.telefone,
-        acompanhantes: dados.acompanhantes,
-        restricoes: dados.restricoes,
-        mensagem: dados.mensagem
-    })
-})
-        .then(response => response.json())
+            method: 'POST',
+            body: new URLSearchParams({
+                nome: dados.nome,
+                email: dados.email,
+                telefone: dados.telefone,
+                acompanhantes: dados.acompanhantes,
+                restricoes: dados.restricoes,
+                mensagem: dados.mensagem
+            })
+        })
+        .then(response => response.text())
         .then(result => {
-            console.log('✅ Dados enviados para Google Sheets:', result);
+            console.log('✅ Enviado para Google Sheets:', result);
         })
         .catch(error => {
-            console.error('❌ Erro ao enviar para Google Sheets:', error);
+            console.error('❌ Erro ao enviar:', error);
         });
     }
 }
