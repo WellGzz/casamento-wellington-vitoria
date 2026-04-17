@@ -86,16 +86,19 @@ function salvarRSVP(dados) {
     // Enviar para Google Sheets
     if (GOOGLE_SHEETS_URL) {
         fetch(GOOGLE_SHEETS_URL, {
-            method: 'POST',
-            body: JSON.stringify({
-                nome: dados.nome,
-                email: dados.email,
-                telefone: dados.telefone,
-                acompanhantes: dados.acompanhantes,
-                restricoes: dados.restricoes,
-                mensagem: dados.mensagem
-            })
-        })
+    method: 'POST',
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        nome: dados.nome,
+        email: dados.email,
+        telefone: dados.telefone,
+        acompanhantes: dados.acompanhantes,
+        restricoes: dados.restricoes,
+        mensagem: dados.mensagem
+    })
+})
         .then(response => response.json())
         .then(result => {
             console.log('✅ Dados enviados para Google Sheets:', result);
