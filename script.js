@@ -1,8 +1,10 @@
-// ===== CONFIGURAÇÃO DE SENHA (IMPORTANTE!) =====
-// Altere essa senha para uma mais segura!
-const ADMIN_PASSWORD = 'wellington2026'; // Mude isso!
+// ===== CONFIGURAÇÃO DE SENHA =====
+const ADMIN_PASSWORD = 'wellington2026';
 
-// Menu Mobile Toggle
+// ===== URL DO GOOGLE SHEETS =====
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxq2toGXgueaugpJXBjnQVtFLhJo5ezxHeQGsGxYivMb3UCDnhnKRWah2p7K6PN6zIF/exec';
+
+// ===== MENU MOBILE TOGGLE =====
 const menuToggle = document.getElementById('menuToggle');
 const navMenu = document.getElementById('navMenu');
 
@@ -73,12 +75,35 @@ function updateCountdown() {
 
 updateCountdown();
 
-// ===== GERENCIAR RSVPs NO LOCAL STORAGE =====
+// ===== GERENCIAR RSVPs NO LOCAL STORAGE E GOOGLE SHEETS =====
 function salvarRSVP(dados) {
+    // Salvar localmente
     let rsvps = JSON.parse(localStorage.getItem('rsvps')) || [];
     dados.id = Date.now();
     rsvps.push(dados);
     localStorage.setItem('rsvps', JSON.stringify(rsvps));
+    
+    // Enviar para Google Sheets
+    if (GOOGLE_SHEETS_URL) {
+        fetch(GOOGLE_SHEETS_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                nome: dados.nome,
+                email: dados.email,
+                telefone: dados.telefone,
+                acompanhantes: dados.acompanhantes,
+                restricoes: dados.restricoes,
+                mensagem: dados.mensagem
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('✅ Dados enviados para Google Sheets:', result);
+        })
+        .catch(error => {
+            console.error('❌ Erro ao enviar para Google Sheets:', error);
+        });
+    }
 }
 
 function carregarRSVPs() {
@@ -144,6 +169,7 @@ adminLoginForm.addEventListener('submit', (e) => {
             adminPanel.classList.add('show');
             atualizarAdminPanel();
             adminLoginForm.reset();
+            adminLoginMessage.textContent = '';
         }, 1000);
     } else {
         adminLoginMessage.textContent = '❌ Senha incorreta!';
@@ -226,8 +252,8 @@ function exibirRSVPsAdmin() {
 const searchInput = document.getElementById('searchInput');
 const filterRestrictions = document.getElementById('filterRestrictions');
 
-searchInput.addEventListener('input', filtrarRSVPs);
-filterRestrictions.addEventListener('change', filtrarRSVPs);
+if (searchInput) searchInput.addEventListener('input', filtrarRSVPs);
+if (filterRestrictions) filterRestrictions.addEventListener('change', filtrarRSVPs);
 
 function filtrarRSVPs() {
     const rsvps = carregarRSVPs();
@@ -308,106 +334,116 @@ const btnExportJSON = document.getElementById('btnExportJSON');
 const btnPrint = document.getElementById('btnPrint');
 const btnLimparDados = document.getElementById('btnLimparDados');
 
-btnExportCSV.addEventListener('click', () => {
-    const rsvps = carregarRSVPs();
-    let csv = 'Nome,Email,Telefone,Acompanhantes,Restrições,Mensagem,Data\n';
-    
-    rsvps.forEach(rsvp => {
-        const dataFormatada = new Date(rsvp.timestamp).toLocaleDateString('pt-BR');
-        csv += `"${rsvp.nome}","${rsvp.email}","${rsvp.telefone}","${rsvp.acompanhantes}","${rsvp.restricoes}","${rsvp.mensagem}","${dataFormatada}"\n`;
+if (btnExportCSV) {
+    btnExportCSV.addEventListener('click', () => {
+        const rsvps = carregarRSVPs();
+        let csv = 'Nome,Email,Telefone,Acompanhantes,Restrições,Mensagem,Data\n';
+        
+        rsvps.forEach(rsvp => {
+            const dataFormatada = new Date(rsvp.timestamp).toLocaleDateString('pt-BR');
+            csv += `"${rsvp.nome}","${rsvp.email}","${rsvp.telefone}","${rsvp.acompanhantes}","${rsvp.restricoes}","${rsvp.mensagem}","${dataFormatada}"\n`;
+        });
+        
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `rsvp_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     });
-    
-    const blob = new Blob([csv], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `rsvp_${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-});
+}
 
-btnExportJSON.addEventListener('click', () => {
-    const rsvps = carregarRSVPs();
-    const json = JSON.stringify(rsvps, null, 2);
-    
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `rsvp_${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
-});
-
-btnPrint.addEventListener('click', () => {
-    const rsvps = carregarRSVPs();
-    let html = '<h1>Confirmações de Presença</h1>';
-    html += `<p>Data de Impressão: ${new Date().toLocaleDateString('pt-BR')}</p>`;
-    html += '<table style="width:100%; border-collapse: collapse;">';
-    html += '<tr style="background: #f0f0f0;"><th style="border: 1px solid #ddd; padding: 8px;">Nome</th><th style="border: 1px solid #ddd; padding: 8px;">Email</th><th style="border: 1px solid #ddd; padding: 8px;">Acompanhantes</th><th style="border: 1px solid #ddd; padding: 8px;">Restrições</th></tr>';
-    
-    rsvps.forEach(rsvp => {
-        html += `<tr>
-            <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.nome}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.email}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.acompanhantes}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.restricoes}</td>
-        </tr>`;
+if (btnExportJSON) {
+    btnExportJSON.addEventListener('click', () => {
+        const rsvps = carregarRSVPs();
+        const json = JSON.stringify(rsvps, null, 2);
+        
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `rsvp_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
     });
-    
-    html += '</table>';
-    
-    const printWindow = window.open('', '', 'width=800,height=600');
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.print();
-});
+}
 
-btnLimparDados.addEventListener('click', () => {
-    if (confirm('⚠️ Tem certeza? Esta ação não pode ser desfeita!')) {
-        localStorage.removeItem('rsvps');
-        document.getElementById('adminRsvpList').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 2rem;">Nenhuma confirmação ainda.</p>';
-        atualizarEstatisticas();
-        alert('✅ Todos os dados foram limpos.');
-    }
-});
+if (btnPrint) {
+    btnPrint.addEventListener('click', () => {
+        const rsvps = carregarRSVPs();
+        let html = '<h1>Confirmações de Presença</h1>';
+        html += `<p>Data de Impressão: ${new Date().toLocaleDateString('pt-BR')}</p>`;
+        html += '<table style="width:100%; border-collapse: collapse;">';
+        html += '<tr style="background: #f0f0f0;"><th style="border: 1px solid #ddd; padding: 8px;">Nome</th><th style="border: 1px solid #ddd; padding: 8px;">Email</th><th style="border: 1px solid #ddd; padding: 8px;">Acompanhantes</th><th style="border: 1px solid #ddd; padding: 8px;">Restrições</th></tr>';
+        
+        rsvps.forEach(rsvp => {
+            html += `<tr>
+                <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.nome}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.email}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.acompanhantes}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${rsvp.restricoes}</td>
+            </tr>`;
+        });
+        
+        html += '</table>';
+        
+        const printWindow = window.open('', '', 'width=800,height=600');
+        printWindow.document.write(html);
+        printWindow.document.close();
+        printWindow.print();
+    });
+}
+
+if (btnLimparDados) {
+    btnLimparDados.addEventListener('click', () => {
+        if (confirm('⚠️ Tem certeza? Esta ação não pode ser desfeita!')) {
+            localStorage.removeItem('rsvps');
+            document.getElementById('adminRsvpList').innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999; padding: 2rem;">Nenhuma confirmação ainda.</p>';
+            atualizarEstatisticas();
+            alert('✅ Todos os dados foram limpos.');
+        }
+    });
+}
 
 // ===== RSVP FORM HANDLER =====
 const rsvpForm = document.getElementById('rsvpForm');
 const formMessage = document.getElementById('formMessage');
 
-rsvpForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    
-    const formData = {
-        nome: document.getElementById('nome').value,
-        email: document.getElementById('email').value,
-        telefone: document.getElementById('telefone').value,
-        acompanhantes: document.getElementById('acompanhantes').value,
-        restricoes: document.getElementById('restricoes').value,
-        mensagem: document.getElementById('mensagem').value,
-        timestamp: new Date().toISOString()
-    };
-    
-    salvarRSVP(formData);
-    
-    console.log('Dados do RSVP salvos:', formData);
-    
-    formMessage.textContent = '✅ Presença confirmada com sucesso! Obrigado!';
-    formMessage.classList.add('success');
-    formMessage.classList.remove('error');
-    
-    rsvpForm.reset();
-    
-    setTimeout(() => {
-        formMessage.textContent = '';
-        formMessage.classList.remove('success');
-    }, 5000);
-});
+if (rsvpForm) {
+    rsvpForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = {
+            nome: document.getElementById('nome').value,
+            email: document.getElementById('email').value,
+            telefone: document.getElementById('telefone').value,
+            acompanhantes: document.getElementById('acompanhantes').value,
+            restricoes: document.getElementById('restricoes').value,
+            mensagem: document.getElementById('mensagem').value,
+            timestamp: new Date().toISOString()
+        };
+        
+        salvarRSVP(formData);
+        
+        console.log('Dados do RSVP salvos:', formData);
+        
+        formMessage.textContent = '✅ Presença confirmada com sucesso! Obrigado!';
+        formMessage.classList.add('success');
+        formMessage.classList.remove('error');
+        
+        rsvpForm.reset();
+        
+        setTimeout(() => {
+            formMessage.textContent = '';
+            formMessage.classList.remove('success');
+        }, 5000);
+    });
+}
 
 // ===== SMOOTH SCROLL =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
