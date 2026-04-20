@@ -417,37 +417,38 @@ if (btnLimparDados) {
 }
 
 // ===== LÓGICA DE CRIANÇAS =====
-const acompanhantesSelect = document.getElementById('acompanhantes');
-const criancasSection = document.getElementById('criancasSection');
-
-if (acompanhantesSelect) {
-    acompanhantesSelect.addEventListener('change', () => {
-        const valor = parseInt(acompanhantesSelect.value);
-        // Mostra a seção se houver mais de 1 pessoa (ou seja, tem acompanhante)
-        if (valor >= 2) {
-            criancasSection.style.display = 'block';
-        } else {
-            criancasSection.style.display = 'none';
-            // Zera os contadores ao esconder
-            document.getElementById('qtd-pequenas').textContent = '0';
-            document.getElementById('qtd-maiores').textContent = '0';
-            document.getElementById('criancasPequenas').value = '0';
-            document.getElementById('criancasMaiores').value = '0';
-        }
-    });
-}
-
-function alterarCrianca(tipo, delta) {
+// alterarCrianca precisa ser global pois é chamada via onclick no HTML
+window.alterarCrianca = function(tipo, delta) {
     const idDisplay = tipo === 'pequenas' ? 'qtd-pequenas' : 'qtd-maiores';
     const idHidden  = tipo === 'pequenas' ? 'criancasPequenas' : 'criancasMaiores';
     const display = document.getElementById(idDisplay);
     const hidden  = document.getElementById(idHidden);
-
+    if (!display || !hidden) return;
     let atual = parseInt(display.textContent) || 0;
     atual = Math.max(0, atual + delta);
     display.textContent = atual;
     hidden.value = atual;
-}
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const acompanhantesSelect = document.getElementById('acompanhantes');
+    const criancasSection     = document.getElementById('criancasSection');
+
+    if (acompanhantesSelect && criancasSection) {
+        acompanhantesSelect.addEventListener('change', () => {
+            const valor = parseInt(acompanhantesSelect.value);
+            if (valor >= 2) {
+                criancasSection.style.display = 'block';
+            } else {
+                criancasSection.style.display = 'none';
+                document.getElementById('qtd-pequenas').textContent = '0';
+                document.getElementById('qtd-maiores').textContent  = '0';
+                document.getElementById('criancasPequenas').value   = '0';
+                document.getElementById('criancasMaiores').value    = '0';
+            }
+        });
+    }
+});
 
 // ===== RSVP FORM HANDLER =====
 const rsvpForm = document.getElementById('rsvpForm');
