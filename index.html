@@ -188,16 +188,36 @@
 
     <!-- Seção Home -->
     <section id="home" class="hero">
+        <div class="hero-background"></div>
         <div class="hero-content">
+            <p class="hero-data-topo">05 de Dezembro de 2026</p>
+            <div class="heart-animation"><i class="fas fa-heart"></i></div>
             <h1 class="names-title">Wellington & Vitoria</h1>
             <p class="subtitle">Vamos celebrar nosso amor!</p>
-            <div class="countdown">
-                <div class="countdown-item"><span id="dias">0</span><label>Dias</label></div>
-                <div class="countdown-item"><span id="horas">0</span><label>Horas</label></div>
-                <div class="countdown-item"><span id="minutos">0</span><label>Minutos</label></div>
-                <div class="countdown-item"><span id="segundos">0</span><label>Segundos</label></div>
+
+            <div class="countdown-hero">
+                <div class="countdown-hero-item">
+                    <span class="countdown-hero-num" id="dias">0</span>
+                    <span class="countdown-hero-label">Dias</span>
+                </div>
+                <div class="countdown-hero-sep">:</div>
+                <div class="countdown-hero-item">
+                    <span class="countdown-hero-num" id="horas">0</span>
+                    <span class="countdown-hero-label">Horas</span>
+                </div>
+                <div class="countdown-hero-sep">:</div>
+                <div class="countdown-hero-item">
+                    <span class="countdown-hero-num" id="minutos">0</span>
+                    <span class="countdown-hero-label">Minutos</span>
+                </div>
+                <div class="countdown-hero-sep">:</div>
+                <div class="countdown-hero-item">
+                    <span class="countdown-hero-num" id="segundos">0</span>
+                    <span class="countdown-hero-label">Segundos</span>
+                </div>
             </div>
-            <a href="#rsvp" class="btn-confirmar">Confirmar Presença</a>
+
+            <a href="#rsvp" class="cta-button">Confirmar Presença</a>
         </div>
     </section>
 
@@ -205,27 +225,66 @@
     <section id="historia" class="historia">
         <div class="container">
             <h2 class="section-title">Nossa História</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-heart"></i></div>
-                    <div class="timeline-content">
-                        <h3>Primeiro Encontro</h3>
-                        <p>Foi num dia especial que nossos caminhos se cruzaram e tudo mudou para sempre.</p>
+            <div class="historia-content">
+                <div class="historia-text">
+                    <p>A história de Wellington e Vitoria é uma história de amor, crescimento e momentos inesquecíveis. Cada dia juntos é uma nova página em nossa jornada.</p>
+                    <p>Com alegria e gratidão, convidamos você a celebrar conosco este dia especial, onde nos unimos não apenas como casal, mas como duas famílias que se abraçam com amor e esperança.</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Nosso Encontro</h3>
+                            <p>Aqui começa tudo...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Momentos Especiais</h3>
+                            <p>Construindo memórias juntos...</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>O Sim!</h3>
+                            <p>E agora vamos casar!</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-ring"></i></div>
-                    <div class="timeline-content">
-                        <h3>O Pedido</h3>
-                        <p>Com muito amor e emoção, o momento mágico em que nos tornamos noivos.</p>
-                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Padrinhos e Madrinhas -->
+    <section id="padrinhos" class="padrinhos">
+        <div class="container">
+            <h2 class="section-title">Padrinhos & Madrinhas</h2>
+            <div class="padrinhos-grid">
+                <div class="padrinho-card">
+                    <div class="padrinho-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Nome do Padrinho</h3>
+                    <p class="padrinho-role">Padrinho</p>
+                    <p class="padrinho-description">Uma breve descrição ou mensagem especial</p>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-icon"><i class="fas fa-church"></i></div>
-                    <div class="timeline-content">
-                        <h3>O Grande Dia</h3>
-                        <p>05 de Dezembro de 2026 — o dia em que diremos "sim" para sempre.</p>
-                    </div>
+                <div class="padrinho-card">
+                    <div class="padrinho-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>Nome da Madrinha</h3>
+                    <p class="padrinho-role">Madrinha</p>
+                    <p class="padrinho-description">Uma breve descrição ou mensagem especial</p>
+                </div>
+                <div class="padrinho-card">
+                    <div class="padrinho-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Nome do Padrinho</h3>
+                    <p class="padrinho-role">Padrinho</p>
+                    <p class="padrinho-description">Uma breve descrição ou mensagem especial</p>
+                </div>
+                <div class="padrinho-card">
+                    <div class="padrinho-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>Nome da Madrinha</h3>
+                    <p class="padrinho-role">Madrinha</p>
+                    <p class="padrinho-description">Uma breve descrição ou mensagem especial</p>
                 </div>
             </div>
         </div>
