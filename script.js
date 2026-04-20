@@ -92,6 +92,8 @@ function salvarRSVP(dados) {
                 email: dados.email,
                 telefone: dados.telefone,
                 acompanhantes: dados.acompanhantes,
+                criancasPequenas: dados.criancasPequenas || 0,
+                criancasMaiores: dados.criancasMaiores || 0,
                 restricoes: dados.restricoes,
                 mensagem: dados.mensagem
             })
@@ -238,6 +240,8 @@ function exibirRSVPsAdmin() {
                 <span><i class="fas fa-envelope"></i> ${rsvp.email}</span>
                 <span><i class="fas fa-phone"></i> ${rsvp.telefone || 'N/A'}</span>
                 <span><i class="fas fa-users"></i> ${rsvp.acompanhantes} ${rsvp.acompanhantes == 1 ? 'pessoa' : 'pessoas'}</span>
+                ${(rsvp.criancasPequenas > 0) ? `<span>👶 ${rsvp.criancasPequenas} criança(s) 0-6 anos</span>` : ''}
+                ${(rsvp.criancasMaiores  > 0) ? `<span>🧒 ${rsvp.criancasMaiores} criança(s) 6-10 anos</span>` : ''}
                 ${rsvp.restricoes ? `<span><i class="fas fa-utensils"></i> ${rsvp.restricoes}</span>` : ''}
             </div>
             ${rsvp.mensagem ? `<div class="admin-rsvp-card-message">💬 "${rsvp.mensagem}"</div>` : ''}
@@ -295,6 +299,8 @@ function filtrarRSVPs() {
                 <span><i class="fas fa-envelope"></i> ${rsvp.email}</span>
                 <span><i class="fas fa-phone"></i> ${rsvp.telefone || 'N/A'}</span>
                 <span><i class="fas fa-users"></i> ${rsvp.acompanhantes} ${rsvp.acompanhantes == 1 ? 'pessoa' : 'pessoas'}</span>
+                ${(rsvp.criancasPequenas > 0) ? `<span>👶 ${rsvp.criancasPequenas} criança(s) 0-6 anos</span>` : ''}
+                ${(rsvp.criancasMaiores  > 0) ? `<span>🧒 ${rsvp.criancasMaiores} criança(s) 6-10 anos</span>` : ''}
                 ${rsvp.restricoes ? `<span><i class="fas fa-utensils"></i> ${rsvp.restricoes}</span>` : ''}
             </div>
             ${rsvp.mensagem ? `<div class="admin-rsvp-card-message">💬 "${rsvp.mensagem}"</div>` : ''}
@@ -410,6 +416,39 @@ if (btnLimparDados) {
     });
 }
 
+// ===== LÓGICA DE CRIANÇAS =====
+const acompanhantesSelect = document.getElementById('acompanhantes');
+const criancasSection = document.getElementById('criancasSection');
+
+if (acompanhantesSelect) {
+    acompanhantesSelect.addEventListener('change', () => {
+        const valor = parseInt(acompanhantesSelect.value);
+        // Mostra a seção se houver mais de 1 pessoa (ou seja, tem acompanhante)
+        if (valor >= 2) {
+            criancasSection.style.display = 'block';
+        } else {
+            criancasSection.style.display = 'none';
+            // Zera os contadores ao esconder
+            document.getElementById('qtd-pequenas').textContent = '0';
+            document.getElementById('qtd-maiores').textContent = '0';
+            document.getElementById('criancasPequenas').value = '0';
+            document.getElementById('criancasMaiores').value = '0';
+        }
+    });
+}
+
+function alterarCrianca(tipo, delta) {
+    const idDisplay = tipo === 'pequenas' ? 'qtd-pequenas' : 'qtd-maiores';
+    const idHidden  = tipo === 'pequenas' ? 'criancasPequenas' : 'criancasMaiores';
+    const display = document.getElementById(idDisplay);
+    const hidden  = document.getElementById(idHidden);
+
+    let atual = parseInt(display.textContent) || 0;
+    atual = Math.max(0, atual + delta);
+    display.textContent = atual;
+    hidden.value = atual;
+}
+
 // ===== RSVP FORM HANDLER =====
 const rsvpForm = document.getElementById('rsvpForm');
 const formMessage = document.getElementById('formMessage');
@@ -418,11 +457,16 @@ if (rsvpForm) {
     rsvpForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
+        const criancasPequenas = parseInt(document.getElementById('criancasPequenas').value) || 0;
+        const criancasMaiores  = parseInt(document.getElementById('criancasMaiores').value)  || 0;
+
         const formData = {
             nome: document.getElementById('nome').value,
             email: document.getElementById('email').value,
             telefone: document.getElementById('telefone').value,
             acompanhantes: document.getElementById('acompanhantes').value,
+            criancasPequenas: criancasPequenas,
+            criancasMaiores: criancasMaiores,
             restricoes: document.getElementById('restricoes').value,
             mensagem: document.getElementById('mensagem').value,
             timestamp: new Date().toISOString()
