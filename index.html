@@ -471,12 +471,46 @@
                     <label for="acompanhantes">Número de Acompanhantes *</label>
                     <select id="acompanhantes" name="acompanhantes" required>
                         <option value="">Selecione</option>
-                        <option value="1">1 pessoa</option>
+                        <option value="1">Somente eu (1 pessoa)</option>
                         <option value="2">2 pessoas</option>
                         <option value="3">3 pessoas</option>
                         <option value="4">4 pessoas</option>
+                        <option value="5">5 pessoas</option>
+                        <option value="6">6 pessoas ou mais</option>
                     </select>
                 </div>
+
+                <!-- Seção de Crianças (aparece quando seleciona acompanhantes) -->
+                <div class="form-group criancas-section" id="criancasSection" style="display:none;">
+                    <label>Entre os acompanhantes, há crianças? 👶</label>
+                    <div class="criancas-opcoes">
+                        <div class="crianca-grupo">
+                            <div class="crianca-label">
+                                <i class="fas fa-baby"></i>
+                                <span>Crianças pequenas <strong>(0 a 6 anos)</strong></span>
+                            </div>
+                            <div class="crianca-counter">
+                                <button type="button" class="counter-btn" onclick="alterarCrianca('pequenas', -1)">−</button>
+                                <span id="qtd-pequenas" class="counter-value">0</span>
+                                <button type="button" class="counter-btn" onclick="alterarCrianca('pequenas', 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="crianca-grupo">
+                            <div class="crianca-label">
+                                <i class="fas fa-child"></i>
+                                <span>Crianças <strong>(6 a 10 anos)</strong></span>
+                            </div>
+                            <div class="crianca-counter">
+                                <button type="button" class="counter-btn" onclick="alterarCrianca('maiores', -1)">−</button>
+                                <span id="qtd-maiores" class="counter-value">0</span>
+                                <button type="button" class="counter-btn" onclick="alterarCrianca('maiores', 1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="criancasPequenas" name="criancasPequenas" value="0">
+                    <input type="hidden" id="criancasMaiores" name="criancasMaiores" value="0">
+                </div>
+
                 <div class="form-group">
                     <label for="restricoes">Restrições Alimentares</label>
                     <textarea id="restricoes" name="restricoes" placeholder="Ex: vegetariano, alergia a frutos secos..."></textarea>
